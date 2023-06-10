@@ -384,7 +384,7 @@
                                                 for (let key in datas) var no = (parseInt(key) + 1).toString();
                                                 $.ajax({
                                                 url: "./data.json",
-                                                type: "POST",
+                                                type: "GET",
                                                 data: JSON.stringify({
                                                     data:{
                                                         "name": title,
