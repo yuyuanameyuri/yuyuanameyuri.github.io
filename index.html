@@ -58,9 +58,7 @@
     <script src="./js/51LA.js"></script>
     <!-- 导入配置json -->
     <script>
-        $.getJSON("./data.json", (data) => {
-            console.log(data);
-        });
+        
     </script>
 </head>
 
@@ -382,12 +380,13 @@
                                             $(".link .col:has(.add-link)").before(`<div class="col"><a id="link-url-5" href="${web}" target="_blank"><div class="link-card cards"><img class="link-img" loading="lazy" src="${img}"><span class="link-name">${title}</span></div></a></div>`);
                                             if ($(".link .row:has(.add-link)>*").length > 5) $(".link .row:has(.add-link) ~ .row").append($(".link .col:has(.add-link)"));
                                             
-                                            for (let key in jsonData) var no = (parseInt(key) + 1).toString();
-                                            $.ajax({
+                                            $.getJSON("./data.json", (datas) => {
+                                                for (let key in datas) var no = (parseInt(key) + 1).toString();
+                                                $.ajax({
                                                 url: "./data.json",
                                                 type: "POST",
                                                 data: JSON.stringify({
-                                                    no: {
+                                                    data:{
                                                         "name": title,
                                                         "url": web,
                                                         "img": img
@@ -399,14 +398,7 @@
                                                     console.log(data);
                                                 }
                                             });
-
-                                            // for (let key in jsonData) var no = (parseInt(key) + 1).toString();
-                                            // jsonData[no] = {
-                                            //     "name": title,
-                                            //     "url": web,
-                                            //     "img": img
-                                            // };
-                                            // console.log(jsonData);
+                                            });                                            
 
                                             // document.querySelector("").oncontextmenu = function () { myScript };
 
