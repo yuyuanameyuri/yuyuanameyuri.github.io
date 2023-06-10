@@ -295,8 +295,8 @@
     }
 }
 
-/* 大于1400px时 */
-@media (min-width: 1400px) {
+/* 大于1396px时 */
+@media (min-width: 1396px) {
 
     /*时钟显示*/
     span#win_text,
@@ -305,10 +305,7 @@
     }
 }
 
-
-/*
-菜单按钮
-*/
+/* 菜单按钮 */
 .menus .col.left {
     display: none;
 }
