@@ -12,10 +12,10 @@
     <meta name="force-rendering" content="webkit" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#424242" />
-    <meta name="description" content="雨缘あめゆり|ameyuri">
+    <meta name="description" content="雨缘あめゆり| ameyuri">
     <meta name="keywords" content="Index">
     <meta name="author" content="雨缘あめゆり">
-    <title>雨缘あめゆり|MyIndex</title>
+    <title>雨缘あめゆり| ameyrui</title>
     <!-- jQuery -->
     <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-y/jquery/3.5.1/jquery.min.js"></script>
     <!-- HarmonyOS Sans -->
@@ -29,13 +29,13 @@
     <link rel="stylesheet" type="text/css" href="./css/mobile.css">
     <link rel="stylesheet" type="text/css" href="./css/loading.css">
     <link rel="stylesheet" type="text/css" href="./css/animation.css">
-    <link rel="icon" href="./favicon.ico">
+    <link rel="icon" href="./img/95d2c6f5c68d050fdb042cad3c99d83cd980b7b6.png">
     <link rel="apple-touch-icon" href="./img/icon/apple-touch-icon.png">
     <!-- Izitoast -->
     <link rel="stylesheet" href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-y/izitoast/1.4.0/css/iziToast.min.css">
     <script type="text/javascript"
         src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-y/izitoast/1.4.0/js/iziToast.min.js">
-    </script>
+        </script>
     <!-- Search Box -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -56,6 +56,12 @@
     <link rel="manifest" href="/manifest.json">
     <!-- 51.LA 统计 -->
     <script src="./js/51LA.js"></script>
+    <!-- 导入配置json -->
+    <script>
+        $.getJSON("https://github.com/yuyuanameyuri/yuyuanameyuri.github.io/blob/main/data.json", (data) => {
+            console.log(data);
+        });
+    </script>
 </head>
 
 <body>
@@ -70,26 +76,29 @@
                 <div class="inner three"></div>
             </div>
             <div class="loading-word">
-                <p class="loading-title" id="loading-title">雨缘あめゆり|ameyuri</p>
+                <p class="loading-title" id="loading-title">雨缘あめゆり| ameyuri</p>
                 <span id="loading-text">Loading......</span>
             </div>
         </div>
     </div>
+    <img id="bg">
     <section id="section" class="section">
         <!-- 背景图片 -->
         <style type="text/css">
-            body{
-              background: url("//i0.hdslb.com/bfs/new_dyn/f730b43f394409f9525e1308307aaca3199716731.png") no-repeat center center fixed;
-                          /*兼容浏览器版本*/
-                          -webkit-background-size: cover;
-                          -o-background-size: cover;                
-                          background-size: cover;
-            } /*背景图*/
-       
-            .test {
-              margin-top: 100px;
+            #bg {
+                background: url("./img/f730b43f394409f9525e1308307aaca3199716731.png") no-repeat center center fixed;
+                /*兼容浏览器版本*/
+                -webkit-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
             }
-          </style>
+
+            /*背景图*/
+
+            .test {
+                margin-top: 100px;
+            }
+        </style>
         <!-- 鼠标指针 -->
         <div id="g-pointer-1"></div>
         <div id="g-pointer-2"></div>
@@ -99,50 +108,72 @@
             <div class="close-btn">
                 <span class="fas fa-times"></span>
             </div>
-            <div class="search-btn">
-                <span class="fas fa-search"></span>
+            <div class="search-bar">
+                <input type="text" id="search" name="word" size="30" placeholder="搜索" autocomplete="off">
+                <span class="searchBarBtn fas fa-search"></span>
             </div>
             <div class="search-data">
-                <input type="text" id="inp" required/>
-                <div class="line"></div>
-                <label>Type to search...</label>
-                <span class="fas fa-search" id="btn"></span>
+                <span></span>
+                <span class="keytips">Alt+Enter</span>
             </div>
 
             <script>
-                var oInp = document.getElementById('inp');
-                var oBtn = document.getElementById('btn');
-            
-                oBtn.onclick = function () {
-                    Search();
-                }
-            
-                document.onkeydown = function () {
-                    if (event.keyCode == 13) {
-                        Search();
-                    }
-                }
-            
-                function Search() {
-                    var url = 'https://cn.bing.com/search?q=' + oInp.value;
-                    window.open(url,'_self');
-                }
-            </script>
+                $(".searchBarBtn").click(search);
 
-            <script>
-                $(".search-btn").click(function(){
-                    $(this).css("display","none");
-                    $(".search-data").fadeIn(500);
-                    $(".close-btn").fadeIn(500);
-                    $(".search-data .line").addClass("active");
-                    setTimeout(function(){
-                        $("input").focus();
-                        $(".search-data label").fadeIn(500);
-                        $(".search-data span").fadeIn(500);
-                    }, 800);
+                function search() {
+                    let url = `https://cn.bing.com/search?q=${$("#search").val()}`;
+                    window.open(url, '_blank');
+                }
+
+                function translate() {
+                    let url = `https://fanyi.baidu.com/#en/zh/${$("#search").val()}`;
+                    window.open(url);
+                }
+
+                function openLink() {
+                    let url = $("#search").val();
+                    url = url.startsWith("https://") ? url.match(/\.\w+$/) ? `${url}/` : url : `https://${url}`;
+                    window.open(url, '_blank')
+                }
+
+                $(".search-bar").click(() => $(".search-bar").css({ "color": "black", "background-color": "rgba(255, 255, 255, .6)", "box-shadow": "rgba(0, 0, 0, .3) 0 0 10px", "width": "530px" }));
+
+                $("#search").focus(() => {
+                    $("#search").attr("placeholder", "");
+                    $("#row").css("display", "none");
+                    $("#bg").css({ "transform": "scale(1.1)", "filter": "blur(10px)" });
+
+                    document.onkeydown = (e) => {
+                        if (!e.altKey && e.key == "Enter") { search(); $("#search").blur(); }
+                        if (e.altKey && e.key == "Enter") {
+                            if ($(".search-data span:first-child").text().search("翻译") != -1) translate();
+                            if ($(".search-data span:first-child").text().search("访问") != -1) openLink();
+                            $("#search").blur();
+                        }
+                    }
                 });
-                $(".close-btn").click(function(){
-                    $(".search-btn").fadeIn(800);
+
+                $("#search").blur(() => {
+                    $("#search").val("");
+                    $("#search").attr("placeholder", "搜索");
+                    $("#row").css("display", "flex");
+                    $(".search-data").css("display", "none");
+                    $("#bg").css({ "transform": "none", "filter": "none" });
+                    $(".search-bar").css({ "color": "white", "background-color": "#ffffff40", "box-shadow": "rgba(0, 0, 0, .2) 0 0 10px", "width": "230px" });
+                    document.onkeydown = null;
+                });
+
+                $("#search").on("input", () => {
+                    if ($("#search").val() != "") {
+                        $(".search-data").css("display", "block");
+                        /.+\..+/.test($("#search").val()) ? $(".search-data span:first-child").text(`访问：${$("#search").val()}`) : $(".search-data span:first-child").text(`翻译：${$("#search").val()}`);
+                    } else {
+                        $(".search-data").css("display", "none");
+                    }
+                });
+
+                $(".close-btn").click(function () {
+                    $(".search-bar").fadeIn(800);
                     $(".search-data").fadeOut(500);
                     $(".close-btn").fadeOut(500);
                     $(".search-data .line").removeClass("active");
@@ -158,7 +189,7 @@
                         <div class="main-left">
                             <!--Logo-->
                             <div class="main-img">
-                                <img id="logo-img" src="./img/icon/logo.png" alt="img">
+                                <img id="logo-img" src="./img/95d2c6f5c68d050fdb042cad3c99d83cd980b7b6.png" alt="img">
                                 <div class="img-title">
                                     <span class="img-title-big" id="logo-text-1">雨缘あめゆり</span>
                                     <span class="img-text" id="logo-text-2">.io</span>
@@ -168,31 +199,32 @@
                             <div class="message cards" id="switchmore">
                                 <div class="des" id="des">
                                     <i class="fa-solid fa-quote-left"></i>
-                                    <div class="des-title"><span id="change">Hello&nbsp;World&nbsp;!</span><br /><span
-                                            id="change1">一个不正经的Up  |  +V: hsbupt</span></div>
+                                    <div class="des-title">
+                                        <span id="change">よこそう！</span><br />
+                                        <span id="change1">咲き、花たち！</span>
+                                    </div>
                                     <i class="fa-solid fa-quote-right"></i>
                                 </div>
                             </div>
                             <!--社交链接-->
                             <div class="social" id="social">
-                                <a href="https://github.com/hsBUPT" class="link" id="github" style="margin-left: 4px"
-                                    target="_blank">
+                                <!-- <a href="https://github.com/hsBUPT" class="link" id="github" style="margin-left: 4px" target="_blank">
                                     <i class="fa-brands fa-github"></i>
-                                </a>
+                                </a> -->
                                 <a href="https://wpa.qq.com/msgrd?v=3&uin=2257757362&site=qq&menu=yes" class="link"
                                     id="qq" target="_blank">
                                     <i class="fa-brands fa-qq"></i>
                                 </a>
-                                <a href="mailto:2257757362@qq.com" class="link" id="email">
+                                <a href="mailto:amyrui@outlook.com" class="link" id="email">
                                     <i class="fa-solid fa-envelope"></i>
                                 </a>
-                                <a href="https://space.bilibili.com/1410673018" class="link" id="bilibili"
+                                <a href="https://space.bilibili.com/96829979" class="link" id="bilibili"
                                     target="_blank">
                                     <i class="fa-brands fa-bilibili"></i>
                                 </a>
-                                <a href="https://t.me/BUPT_hs" class="link" id="telegram" target="_blank">
+                                <!-- <a href="https://t.me/BUPT_hs" class="link" id="telegram" target="_blank">
                                     <i class="fa-brands fa-telegram"></i>
-                                </a>
+                                </a> -->
                                 <a id="link-text">通过这里联系我</a>
                             </div>
                         </div>
@@ -205,24 +237,24 @@
                         <div class="main-right">
                             <!--功能区-->
                             <div class="row rightone" id="rightone">
-                                <div class="col hitokotos">
-                                    <!--一言-->
-                                    <div class="hitokoto cards" id="hitokoto">
-                                        <!--切换音乐-->
-                                        <div class="open-music fixed-top" id="open-music">
+                                <!-- <div class="col hitokotos"> -->
+                                <!--一言-->
+                                <!-- <div class="hitokoto cards" id="hitokoto"> -->
+                                <!-- 切换音乐 -->
+                                <!-- <div class="open-music fixed-top" id="open-music">
                                             <i class="fa-solid fa-compact-disc"></i>
                                             <span>&nbsp;打开音乐播放器</span>
-                                        </div>
-                                        <!--切换音乐结束-->
-                                        <div class="hitokoto-all">
+                                        </div> -->
+                                <!--切换音乐结束-->
+                                <!-- <div class="hitokoto-all">
                                             <div class="hitokoto-text"><span id="hitokoto_text">一个不正经的Up</span>
                                             </div>
                                             <div class="hitokoto-from">-「&nbsp;<span id="from_text">雨缘あめゆり</span>&nbsp;」
                                             </div>
                                         </div>
-                                    </div>
-                                    <!--音乐-->
-                                    <div class="music" id="music">
+                                    </div> -->
+                                <!--音乐-->
+                                <!-- <div class="music" id="music">
                                         <div class="music-all">
                                             <div class="music-button">
                                                 <div id="music-open">音乐列表</div>
@@ -247,20 +279,27 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </div> -->
+                                <!-- </div>  -->
                                 <div class="col times">
                                     <!--时间-->
                                     <div class="time cards" id="upWeather">
                                         <div class="timeshow" id="time">
-                                            2000&nbsp;年&nbsp;0&nbsp;月&nbsp;00&nbsp;日&nbsp;<span
-                                                class="weekday">星期一</span><br><span class="time-text">00:00:00</span>
+                                            <span class="nowdate">2020 年 1 月 1 日 </span>
+                                            <span class="weekday">星期一</span><br>
+                                            <span class='time-text'>
+                                                <span class="hour">00</span>
+                                                <span class="time-sep">:</span>
+                                                <span class="minute">00</span>
+                                                <span class="time-sep">:</span>
+                                                <span class="second">00</span>
+                                            </span>
                                         </div>
                                         <div class="weather">
                                             <span id="city_text"> </span>&nbsp;
                                             <span id="wea_text"> </span>&nbsp;
-                                            <span id="tem_text"> </span>
-                                            <span id="win_text"> </span>
+                                            <span id="tem_text"> </span>&nbsp;
+                                            <span id="win_text"> </span>&nbsp;
                                             <span id="win_speed"> </span>
                                         </div>
                                     </div>
@@ -274,59 +313,126 @@
                             <!--网站链接-->
                             <div class="link">
                                 <!--第一组-->
-                                <div class="row">
-                                    <div class="col">
-                                        <a id="link-url-1" href="https://www.csdn.net/" target="_blank">
-                                            <div class="link-card cards">
-                                                <i id="link-icon-1" class="fa-solid fa-blog"></i>
-                                                <span class="link-name" id="link-name-1">CSDN</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col 2">
-                                        <a id="link-url-2" href="https://pan.baidu.com/" target="_blank">
-                                            <div class="link-card cards">
-                                                <i id="link-icon-2" class="fa-solid fa-cloud"></i>
-                                                <span class="link-name" id="link-name-2">NetPan</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <a id="link-url-3" href="https://music.163.com/" target="_blank">
-                                            <div class="link-card cards">
-                                                <i id="link-icon-3" class="fa-solid fa-music"></i>
-                                                <span class="link-name" id="link-name-3">Music</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
+                                <div class="row"></div>
                                 <!--第二组-->
-                                <div class="row" style="margin-top: 1.5rem;">
-                                    <div class="col">
-                                        <a id="link-url-4" href="https://www.bing.com/" target="_blank">
-                                            <div class="link-card cards">
-                                                <i id="link-icon-4" class="fa-solid fa-compass"></i>
-                                                <span class="link-name" id="link-name-4">Bing</span>
-                                            </div>
-                                        </a>
+                                <div class="row"></div>
+                                <div class="cusNavForm" id="frmSetCustomNav">
+                                    <div id="pageSetCusNavMain">
+                                        <div class="popCaptionS" id="captionSetCusNav">添加网站捷径</div>
+                                        <div class="btnCloseS" id="btnCloseFrmCusNav" role="button" tabindex="0"
+                                            title="关闭">×</div>
+                                        <input class="inputCustom" id="inputCustomUrl" placeholder="网址" inputmode="url">
+                                        <input class="inputCustom" id="inputCustomTitle" placeholder="标题 - 留空即自动获取">
+                                        <div class="btnSetCusNavDetail" id="btnSetCusNavIcon">图标
+                                            <span>
+                                                <span id="setCusNavIconSelectedType">自动</span>
+                                                <span> > </span>
+                                            </span>
+                                        </div>
+                                        <div class="btnCustom" id="btnAddCusNav" role="button" tabindex="0">添加</div>
                                     </div>
-                                    <div class="col 2">
-                                        <a id="link-url-5" href="https://openai.com/" target="_blank">
-                                            <div class="link-card cards">
-                                                <i id="link-icon-5" class="fa-solid fa-book-bookmark"></i>
-                                                <span class="link-name" id="link-name-5">OpenAI</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <a id="link-url-6" href="https://github.com/arofish/Mirror-pi" target="_blank">
-                                            <div class="link-card cards">
-                                                <i id="link-icon-6" class="fa-solid fa-flask"></i>
-                                                <span class="link-name" id="link-name-6">Mirror-pi</span>
-                                            </div>
-                                        </a>
+                                    <div id="pageSetCusNavIcon">
+                                        <div class="captionBarSetCusNav">
+                                            <span class="btnBackToPageSetCusNav" id="btnBackToPageSetCusNavFromIcon">
+                                                < </span>
+                                                    <div class="popCaptionS">自定义捷径图标</div>
+                                        </div>
+                                        <div class="setCusNavIconOpt" aria-checked="false">
+                                            <div class="setCusNavIconType">自动</div>
+                                            <div class="setCusNavIconDescription">自动获取并设置最适宜的图标。</div>
+                                            <span id="cusNavIconOptCheck">√</span>
+                                        </div>
+                                        <div class="setCusNavIconOpt" aria-checked="false">
+                                            <div class="setCusNavIconType">手动设置</div>
+                                            <div id="cusNavIconPreviewManual">?</div>
+                                        </div>
+                                        <input id="inputCusNavIconUrl" placeholder="在此键入图标/图片文件的URL" inputmode="url">
                                     </div>
                                 </div>
+                                <script>
+                                    $(".link .row").each((index, ele) => {
+                                        if (ele.children.length >= 5) return true;
+                                        $(ele).append(`<div class="col"><div class="link-card cards add-link" style="font-size: 48px;">+</div></div>`);
+                                        return false;
+                                    });
+
+                                    $(".add-link").click((e) => {
+                                        $("#frmSetCustomNav").css({ "left": $(".add-link").offset().left + ($(".add-link").width() / 2) - ($("#frmSetCustomNav").width() / 2), "top": e.clientY - 240, "display": "block", "opacity": "1", "transform": "scale(1)" });
+                                        $("#pageSetCusNavMain").css("transform", "");
+                                        $("#pageSetCusNavIcon").css("transform", "");
+                                        $(document).click((e) => {
+                                            if (!$.contains($("#frmSetCustomNav")[0], e.target) && !(e.target.classList.contains("add-link"))) {
+                                                $("#frmSetCustomNav").css({ "display": "none", "opacity": "0" });
+                                                $("#inputCustomUrl").val("");
+                                                $("#inputCustomTitle").val("");
+                                                $("#inputCusNavIconUrl").val("");
+                                                $(document.querySelector(".setCusNavIconOpt")).click();
+                                                $(document).unbind("click");
+                                            }
+                                        });
+                                    });
+                                    $("#btnCloseFrmCusNav").click(() => $("#frmSetCustomNav").css({ "display": "none", "opacity": "0" }));
+                                    $("#btnAddCusNav").click(() => {
+                                        let web = $("#inputCustomUrl").val();
+                                        if (web) {
+                                            web = web.startsWith("https://") ? web.match(/\.\w+$/) ? `${web}/` : web : `https://${web}`;
+                                            let title = $("#inputCustomTitle").val() == "" ? web.match(/(https?:\/\/[^/]+)/i) ? web.match(/(https?:\/\/[^/]+)/i)[1].split("//")[1].split(".").slice(-2, -1)[0] : web.split('/')[0].split('.').slice(-2, -1)[0] : $("#inputCustomTitle").val();
+                                            let img = $("#inputCusNavIconUrl").val() == "" ? `${web.match(/(https?:\/\/[^/]+)/i) ? web.match(/(https?:\/\/[^/]+)/i)[1] : web.split('/')[0]}/favicon.ico` : $("#inputCusNavIconUrl").val();
+
+                                            $(".link .col:has(.add-link)").before(`<div class="col"><a id="link-url-5" href="${web}" target="_blank"><div class="link-card cards"><img class="link-img" loading="lazy" src="${img}"><span class="link-name">${title}</span></div></a></div>`);
+                                            if ($(".link .row:has(.add-link)>*").length > 5) $(".link .row:has(.add-link) ~ .row").append($(".link .col:has(.add-link)"));
+                                            
+                                            for (let key in jsonData) var no = (parseInt(key) + 1).toString();
+                                            $.ajax({
+                                                url: "https://github.com/yuyuanameyuri/yuyuanameyuri.github.io/blob/main/data.json",
+                                                type: "POST",
+                                                data: JSON.stringify({
+                                                    no: {
+                                                        "name": title,
+                                                        "url": web,
+                                                        "img": img
+                                                    },
+                                                }),
+                                                contentType: "application/json; charset=utf-8",
+                                                dataType: "json",
+                                                success: (data) => {
+                                                    console.log(data);
+                                                }
+                                            });
+
+                                            // for (let key in jsonData) var no = (parseInt(key) + 1).toString();
+                                            // jsonData[no] = {
+                                            //     "name": title,
+                                            //     "url": web,
+                                            //     "img": img
+                                            // };
+                                            // console.log(jsonData);
+
+                                            // document.querySelector("").oncontextmenu = function () { myScript };
+
+                                            $("#inputCustomUrl").val("");
+                                            $("#inputCustomTitle").val("");
+                                            $("#inputCusNavIconUrl").val("");
+                                            $(document.querySelector(".setCusNavIconOpt")).click();
+                                            $("#frmSetCustomNav").css({ "display": "none", "opacity": "0" });
+                                        }
+                                    });
+                                    $("#btnSetCusNavIcon").click(() => {
+                                        $("#pageSetCusNavMain").css("transform", "translateX(-100%)");
+                                        $("#pageSetCusNavIcon").css("transform", "translateY(-100%)");
+                                    });
+                                    $("#btnBackToPageSetCusNavFromIcon").click(() => {
+                                        $("#pageSetCusNavMain").css("transform", "");
+                                        $("#pageSetCusNavIcon").css("transform", "");
+                                    });
+                                    $(".setCusNavIconOpt").each((index, ele) => {
+                                        $(ele).click(() => {
+                                            $(ele).append($("#cusNavIconOptCheck"));
+                                            $("#setCusNavIconSelectedType").text($(ele).children(".setCusNavIconType").text());
+                                            $("#btnBackToPageSetCusNavFromIcon").click();
+                                        });
+                                    });
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -350,37 +456,37 @@
                     </div>
                     <div class="date" id="date">
                         <div class="item" id="dayProgress">
-                            <div class="date-text" style="margin-top: 0rem;">今日已经度过了&nbsp;<span></span>&nbsp;小时</div>
+                            <div class="date-text" style="margin-top: 0rem;">今日已经度过了 <span>0</span> 小时</div>
                             <div class="progress">
                                 <div class="progress-bar"></div>
                             </div>
                         </div>
                         <div class="item" id="weekProgress">
-                            <div class="date-text">本周已经度过了&nbsp;<span></span>&nbsp;天</div>
+                            <div class="date-text">本周已经度过了 <span>0</span> 天</div>
                             <div class="progress">
                                 <div class="progress-bar"></div>
                             </div>
                         </div>
                         <div class="item" id="monthProgress">
-                            <div class="date-text">本月已经度过了&nbsp;<span></span>&nbsp;天</div>
+                            <div class="date-text">本月已经度过了 <span>0</span> 天</div>
                             <div class="progress">
                                 <div class="progress-bar"></div>
                             </div>
                         </div>
                         <div class="item" id="yearProgress">
-                            <div class="date-text">今年已经度过了&nbsp;<span></span>&nbsp;个月</div>
+                            <div class="date-text">今年已经度过了 <span>0</span> 天，还剩 <span>0</span> 天</div>
                             <div class="progress">
                                 <div class="progress-bar"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="line">
+                    <!-- <div class="line">
                         <i class="fa-solid fa-angle-left"></i>
                         <span class="line-text">杂七杂八</span>
                         <i class="fa-solid fa-angle-right"></i>
-                    </div>
-                    <!--网站链接-->
-                    <div class="row">
+                    </div> -->
+                    <!-- 网站链接 -->
+                    <!-- <div class="row">
                         <div class="col">
                             <a href="https://www.cupfox.app/" target="_blank">
                                 <div class="link-card cards">
@@ -424,132 +530,127 @@
                                     <span class="link-name">更多</span>
                                 </div>
                             </a>
-                        </div>
-                    </div>
+                        </div> -->
                 </div>
-                <!--更多页面-->
-                <div class="box" id="box" style="display: none">
-                    <div class="box-wrapper">
-                        <!--关闭按钮-->
-                        <div class="closebox fixed-top" id="closemore">
-                            <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+            <!--更多页面-->
+            <div class="box" id="box" style="display: none">
+                <div class="box-wrapper">
+                    <!--关闭按钮-->
+                    <div class="closebox fixed-top" id="closemore">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </div>
+                    <!--左侧内容-->
+                    <div class="box-left">
+                        <div class="img-title">
+                            <span class="img-title-big" id="logo-title-other">雨缘あめゆり</span>
+                            <span class="img-text" id="logo-title-other-small">.io</span><br />
+                            <span class="img-text">&nbsp;v&nbsp;1.1</span>
+                            <a href="https://github.com/hsBUPT" target="_blank">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
                         </div>
-                        <!--左侧内容-->
-                        <div class="box-left">
-                            <div class="img-title">
-                                <span class="img-title-big" id="logo-title-other">雨缘あめゆり</span>
-                                <span class="img-text" id="logo-title-other-small">.io</span><br />
-                                <span class="img-text">&nbsp;v&nbsp;1.1</span>
-                                <a href="https://github.com/hsBUPT" target="_blank">
-                                    <i class="fa-brands fa-github"></i>
-                                </a>
-                            </div>
-                            <!--更多内容-->
-                            <div class="accordion" id="accordion">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            壁纸设置
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                        aria-labelledby="headingOne" data-bs-parent="#accordion">
-                                        <div class="accordion-body">
-                                            <div class="set">
-                                                <div class="wallpaper" id="wallpaper">
-                                                    <div class="form-radio">
-                                                        <input type="radio" class="set-wallpaper" style="display: none;"
-                                                            id="radio1" value="1" name="wallpaper-type">
-                                                        <label for="radio1">默认壁纸</label>
-                                                    </div>
-                                                    <div class="form-radio">
-                                                        <input type="radio" class="set-wallpaper" style="display: none;"
-                                                            id="radio2" value="2" name="wallpaper-type">
-                                                        <label for="radio2" id="wallpaper_text1">每日一图</label>
-                                                    </div>
-                                                    <div class="form-radio">
-                                                        <input type="radio" class="set-wallpaper" style="display: none;"
-                                                            id="radio3" value="3" name="wallpaper-type">
-                                                        <label for="radio3" id="wallpaper_text2">随机风景</label>
-                                                    </div>
-                                                    <div class="form-radio">
-                                                        <input type="radio" class="set-wallpaper" style="display: none;"
-                                                            id="radio4" value="4" name="wallpaper-type">
-                                                        <label for="radio4" id="wallpaper_text3">随机动漫</label>
-                                                    </div>
+                        <!--更多内容-->
+                        <div class="accordion" id="accordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        壁纸设置
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingOne" data-bs-parent="#accordion">
+                                    <div class="accordion-body">
+                                        <div class="set">
+                                            <div class="wallpaper" id="wallpaper">
+                                                <div class="form-radio">
+                                                    <input type="radio" class="set-wallpaper" style="display: none;"
+                                                        id="radio1" value="1" name="wallpaper-type">
+                                                    <label for="radio1">默认壁纸</label>
+                                                </div>
+                                                <div class="form-radio">
+                                                    <input type="radio" class="set-wallpaper" style="display: none;"
+                                                        id="radio2" value="2" name="wallpaper-type">
+                                                    <label for="radio2" id="wallpaper_text1">每日一图</label>
+                                                </div>
+                                                <div class="form-radio">
+                                                    <input type="radio" class="set-wallpaper" style="display: none;"
+                                                        id="radio3" value="3" name="wallpaper-type">
+                                                    <label for="radio3" id="wallpaper_text2">随机风景</label>
+                                                </div>
+                                                <div class="form-radio">
+                                                    <input type="radio" class="set-wallpaper" style="display: none;"
+                                                        id="radio4" value="4" name="wallpaper-type">
+                                                    <label for="radio4" id="wallpaper_text3">随机动漫</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!--更新日志-->
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingTwo">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                            更新日志
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse"
-                                        aria-labelledby="headingTwo" data-bs-parent="#accordion">
-                                        <div class="accordion-body">
-                                            <div class="upnote">
-                                                <span class="uptext">
-                                                    <i class="fa-solid fa-circle-plus"></i>&nbsp;添加搜索框及动画css样式
-                                                </span>
-                                                <span class="uptext">
-                                                    <i class="fa-solid fa-circle-plus"></i>&nbsp;音乐歌单支持快速自定义
-                                                </span>
-                                                <span class="uptext">
-                                                    <i class="fa-solid fa-circle-plus"></i>&nbsp;壁纸支持个性化设置
-                                                </span>
-                                                <span class="uptext">
-                                                    <i class="fa-solid fa-circle-plus"></i>&nbsp;音乐播放器支持音量控制
-                                                </span>
-                                                <span class="uptext">
-                                                    <i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;修复天气 API
-                                                </span>
-                                                <span class="uptext">
-                                                    <i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;时光胶囊显示错误
-                                                </span>
-                                                <span class="uptext">
-                                                    <i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;移动端动画及细节
-                                                </span>
-                                                <span class="uptext">
-                                                    <i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;图标更换为 Font
-                                                    Awesome</span>
-                                                <span class="uptext">
-                                                    <i class="fa-solid fa-rotate-left"></i>
-                                                    <a href="./old/" style="color:#efefef">返回旧版站点</a>
-                                                </span>
-                                            </div>
+                            </div>
+                            <!--更新日志-->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        更新日志
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                    data-bs-parent="#accordion">
+                                    <div class="accordion-body">
+                                        <div class="upnote">
+                                            <span class="uptext">
+                                                <i class="fa-solid fa-circle-plus"></i>&nbsp;添加搜索框及动画css样式
+                                            </span>
+                                            <span class="uptext">
+                                                <i class="fa-solid fa-circle-plus"></i>&nbsp;音乐歌单支持快速自定义
+                                            </span>
+                                            <span class="uptext">
+                                                <i class="fa-solid fa-circle-plus"></i>&nbsp;壁纸支持个性化设置
+                                            </span>
+                                            <span class="uptext">
+                                                <i class="fa-solid fa-circle-plus"></i>&nbsp;音乐播放器支持音量控制
+                                            </span>
+                                            <span class="uptext">
+                                                <i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;修复天气 API
+                                            </span>
+                                            <span class="uptext">
+                                                <i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;时光胶囊显示错误
+                                            </span>
+                                            <span class="uptext">
+                                                <i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;移动端动画及细节
+                                            </span>
+                                            <span class="uptext">
+                                                <i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;图标更换为 Font
+                                                Awesome</span>
+                                            <span class="uptext">
+                                                <i class="fa-solid fa-rotate-left"></i>
+                                                <a href="./old/" style="color:#efefef">返回旧版站点</a>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--Aplayer-->
-                        <div class="box-right">
-                            <div id="aplayer">
-                                <span>音乐播放器加载失败</span>
-                            </div>
+                    </div>
+                    <!--Aplayer-->
+                    <div class="box-right">
+                        <div id="aplayer">
+                            <span>音乐播放器加载失败</span>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
         </main>
         <!-- 版权信息 -->
         <footer id="footer" class="fixed-bottom footer">
-            <div class="power">Copyright&nbsp;©&nbsp;<span id="power-year">2022</span>
+            <div class="power">Copyright&nbsp;©&nbsp;<span id="power-year">2023</span>
                 <script>
-                    document.write(' - ' + (new Date()).getFullYear())
-                </script>&nbsp;<a href="http://www.hsbupt.love/" id="power-text">雨缘あめゆり|Hs</a>&nbsp;&amp;&nbsp;
-                <!-- 以下信息请不要修改哦 -->
-                Made&nbsp;⚙Modified from&nbsp;<a href="/" target="_blank">imsyy</a>
-				🔒<a href="https://beian.miit.gov.cn/">暂未备案</a>
+                    document.write(` - ${new Date().getFullYear()}`)
+                </script>&nbsp;<a id="power-text">雨缘あめゆり| ameyuri</a>
             </div>
             <!-- 歌词显示 -->
             <div id="lrc"></div>
@@ -559,7 +660,7 @@
     <script>
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
-                navigator.serviceWorker.register("sw.js");
+                navigator.serviceWorker?.register("sw.js");
             });
         }
     </script>
@@ -574,7 +675,7 @@
     <script type="text/javascript" src="./js/js.cookie.js"></script>
     <script type="text/javascript"
         src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-y/bootstrap/5.1.0/js/bootstrap.min.js">
-    </script>
+        </script>
 </body>
 
 </html>
