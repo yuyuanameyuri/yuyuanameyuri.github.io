@@ -58,7 +58,7 @@
     <script src="./js/51LA.js"></script>
     <!-- 导入配置json -->
     <script>
-        $.getJSON("https://github.com/yuyuanameyuri/yuyuanameyuri.github.io/blob/main/data.json", (data) => {
+        $.getJSON("./data.json", (data) => {
             console.log(data);
         });
     </script>
@@ -384,7 +384,7 @@
                                             
                                             for (let key in jsonData) var no = (parseInt(key) + 1).toString();
                                             $.ajax({
-                                                url: "https://github.com/yuyuanameyuri/yuyuanameyuri.github.io/blob/main/data.json",
+                                                url: "./data.json",
                                                 type: "POST",
                                                 data: JSON.stringify({
                                                     no: {
